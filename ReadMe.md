@@ -12,3 +12,8 @@ OpenGL playground with window initialization.
 ### Windows
 1. cd build
 2. win-debug.bat
+
+## Attributes
+https://github.com/Lazarus247/project247
+https://stackoverflow.com/questions
+https://docs.microsoft.com/en-us/cpp/build/reference/compiler-options
