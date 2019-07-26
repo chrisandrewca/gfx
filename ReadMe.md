@@ -1,4 +1,5 @@
 # GFX
+OpenGL playground with window initialization.
 
 ## Platforms
 - Windows
