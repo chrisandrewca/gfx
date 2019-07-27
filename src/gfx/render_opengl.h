@@ -4,6 +4,7 @@
 class RenderOpenGL
 {
 public:
+    void printBasicInfo();
     void render();
 };
 

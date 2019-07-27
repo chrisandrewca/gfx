@@ -191,8 +191,9 @@ bool WindowOpenGL::create(HINSTANCE curr, int cmdShow)
 	}
 
 	// init opengl loader here (extra safe version)
+	InitializeOpenGLFunctions();
+	renderer.printBasicInfo();
 
-	gfxLog::cout(reinterpret_cast<LPCSTR>(glGetString(GL_VERSION)));
 	SetWindowText(hwnd, L"GFX");
 	ShowWindow(hwnd, cmdShow);
 

@@ -1,11 +1,30 @@
 #include "render_opengl.h"
 #include "gl.h"
+#include "utils/log.h"
 
 using namespace gfxOpenGL;
 
+void RenderOpenGL::printBasicInfo()
+{
+    gfxLog::cout(glGetString(GL_RENDERER));
+    gfxLog::cout(glGetString(GL_VERSION));
+}
+
+// render a sample
+#include "gfx/samples/basic_triangle/basic_triangle.h"
+static BasicTriangle basicTriangle;
+
 void RenderOpenGL::render()
 {
-    //glClearColor(0.129f, 0.586f, 0.949f, 1.0f); // rgb(33,150,243)
-    glClearColor(1.0f, 0, 0, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    // glClearColor(0.129f, 0.586f, 0.949f, 1.0f); // rgb(33,150,243)
+    // glClear(GL_COLOR_BUFFER_BIT);
+
+    // opengl state machine ...
+    static bool loaded = false;
+    if (!loaded) basicTriangle.loadOpenGL();
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glUseProgram(basicTriangle.shader);   
+    glBindVertexArray(basicTriangle.vao);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 }
