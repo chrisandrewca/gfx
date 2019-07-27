@@ -4,11 +4,13 @@ if not exist .\artifacts\obj\* mkdir .\artifacts\obj
 cl ^
 /EHsc ^
 /std:c++17 ^
-/Zi ^
 /I..\src\deps ^
 /I..\src\deps\opengl ^
 /I..\src ^
 /DUNICODE ^
+/Zi ^
+/DDEBUG ^
+/DVALIDATE_SHADERS ^
 /Fo.\artifacts\obj\ ^
     ..\src\platform\win\main.cpp ^
     ..\src\platform\win\gl_win.cpp ^

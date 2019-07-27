@@ -52,6 +52,9 @@ public:
         glCompileShader(fs);
 
         shader = glCreateProgram();
+        ValidateShader(shader);
+        PrintShaderDetails(shader);
+
         glAttachShader(shader, vs);
         glAttachShader(shader, fs);
         glLinkProgram(shader);

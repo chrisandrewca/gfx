@@ -1,18 +1,17 @@
 #ifndef _GFX_LOG_
 #define _GFX_LOG_
 
-#include <iostream>
+#include "debug.h"
 
-// TODO off/on
-namespace gfxLog
-{
-template <typename Arg, typename... Args>
-void cout(Arg &&arg, Args &&... args)
-{
-    std::cout << std::forward<Arg>(arg);
-    ((std::cout << std::forward<Args>(args)), ...);
-    std::cout << std::endl;
-}
-} // namespace gfxLog
+#include <stdarg.h>
+#include <stdio.h>
+
+#define PrintD(fmt, ...)                                       \
+    do                                                         \
+    {                                                          \
+        if (DEBUG_TEST)                                        \
+            fprintf(stderr, "%s:%d:%s(): " fmt "\n", __FILE__, \
+                    __LINE__, __func__, __VA_ARGS__);          \
+    } while (0)
 
 #endif

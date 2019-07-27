@@ -6,8 +6,8 @@ using namespace gfxOpenGL;
 
 void RenderOpenGL::printBasicInfo()
 {
-    gfxLog::cout(glGetString(GL_RENDERER));
-    gfxLog::cout(glGetString(GL_VERSION));
+    PrintD("%s", glGetString(GL_RENDERER));
+    PrintD("%s", glGetString(GL_VERSION));
 }
 
 // render a sample
@@ -21,7 +21,7 @@ void RenderOpenGL::render()
 
     // opengl state machine ...
     static bool loaded = false;
-    if (!loaded) basicTriangle.loadOpenGL();
+    if (!loaded) basicTriangle.loadOpenGL(); loaded = true;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram(basicTriangle.shader);   
