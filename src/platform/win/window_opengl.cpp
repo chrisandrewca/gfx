@@ -1,10 +1,10 @@
-#include "window.h"
-#include "wingl.h"
+#include "window_opengl.h"
+#include "gfx/gl.h"
 #include "utils/log.h"
 
-using namespace gfxWingl;
+using namespace gfxOpenGL;
 
-LRESULT CALLBACK Window::WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WindowOpenGL::WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -23,7 +23,7 @@ LRESULT CALLBACK Window::WindowProcedure(HWND hWnd, UINT message, WPARAM wParam,
 	return 0; // message handled
 }
 
-Window::Window()
+WindowOpenGL::WindowOpenGL()
 {
 	width = 1024;
 	height = 720;
@@ -34,7 +34,7 @@ Window::Window()
 	style = WS_CAPTION | WS_SYSMENU | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
 }
 
-void Window::adjustSize()
+void WindowOpenGL::adjustSize()
 {
 	RECT rect = {0, 0, width, height};
 	AdjustWindowRect(&rect, style, false);
@@ -42,7 +42,7 @@ void Window::adjustSize()
 	height = rect.bottom - rect.top;
 }
 
-void Window::center()
+void WindowOpenGL::center()
 {
 	RECT primaryDisplaySize;
 	SystemParametersInfo(SPI_GETWORKAREA, 0, &primaryDisplaySize, 0); // system taskbar and application desktop toolbars not included
@@ -50,7 +50,7 @@ void Window::center()
 	posY = (primaryDisplaySize.bottom - height) / 2;
 }
 
-bool Window::create(HINSTANCE curr, int cmdShow)
+bool WindowOpenGL::create(HINSTANCE curr, int cmdShow)
 {
 	windowClass = MAKEINTATOM(registerClass(curr));
 	if (windowClass == 0)
@@ -107,15 +107,14 @@ bool Window::create(HINSTANCE curr, int cmdShow)
 	}
 
 	// get pointers to functions (or init opengl loader here)
+	InitializeContextDependantFunctions();
 
-	auto wglChoosePixelFormatARB = GetAnyGLFuncAddress<PFNWGLCHOOSEPIXELFORMATARBPROC>("wglChoosePixelFormatARB");
 	if (wglChoosePixelFormatARB == nullptr)
 	{
 		showMessage(L"wglGetProcAddress() failed.");
 		return false;
 	}
 
-	auto wglCreateContextAttribsARB = GetAnyGLFuncAddress<PFNWGLCREATECONTEXTATTRIBSARBPROC>("wglCreateContextAttribsARB");
 	if (wglCreateContextAttribsARB == nullptr)
 	{
 		showMessage(L"wglGetProcAddress() failed.");
@@ -200,7 +199,7 @@ bool Window::create(HINSTANCE curr, int cmdShow)
 	return true;
 }
 
-void Window::destroy()
+void WindowOpenGL::destroy()
 {
 	wglMakeCurrent(NULL, NULL);
 	if (hglrc)
@@ -217,14 +216,12 @@ void Window::destroy()
 	}
 }
 
-void Window::render()
+void WindowOpenGL::render()
 {
-	//glClearColor(0.129f, 0.586f, 0.949f, 1.0f); // rgb(33,150,243)
-	glClearColor(1.0f, 0, 0, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	renderer.render();
 }
 
-ATOM Window::registerClass(HINSTANCE curr)
+ATOM WindowOpenGL::registerClass(HINSTANCE curr)
 {
 	WNDCLASSEX wcex;
 	ZeroMemory(&wcex, sizeof(wcex));
@@ -237,12 +234,12 @@ ATOM Window::registerClass(HINSTANCE curr)
 	return RegisterClassEx(&wcex);
 }
 
-void Window::showMessage(LPCWSTR message)
+void WindowOpenGL::showMessage(LPCWSTR message)
 {
-	MessageBox(0, message, L"Window::create", MB_ICONERROR);
+	MessageBox(0, message, L"WindowOpenGL::create", MB_ICONERROR);
 }
 
-void Window::swapBuffers()
+void WindowOpenGL::swapBuffers()
 {
 	SwapBuffers(hdc);
 }

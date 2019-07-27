@@ -1,7 +1,5 @@
 #include "win.h"
-#include "window.h"
-
-#include <iostream>
+#include "window_opengl.h"
 
 int APIENTRY wWinMain(
     HINSTANCE curr,
@@ -9,9 +7,7 @@ int APIENTRY wWinMain(
     LPWSTR cmdLine,
     int cmdShow)
 {
-    std::cout << "Hello, world!" << std::endl;
-
-    Window window;
+    WindowOpenGL window;
     if (!window.create(curr, cmdShow))
     {
         PostQuitMessage(1);

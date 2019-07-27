@@ -11,7 +11,10 @@ cl ^
 /DUNICODE ^
 /Fo.\artifacts\obj\ ^
     ..\src\platform\win\main.cpp ^
-    ..\src\platform\win\window.cpp ^
+    ..\src\platform\win\gl_win.cpp ^
+    ..\src\platform\win\window_opengl.cpp ^
+    ..\src\gfx\gl.cpp ^
+    ..\src\gfx\render_opengl.cpp ^
 /link ^
     user32.lib ^
     gdi32.lib ^

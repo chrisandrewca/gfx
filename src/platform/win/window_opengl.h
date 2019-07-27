@@ -1,12 +1,13 @@
-#ifndef _GFX_WINDOW_
-#define _GFX_WINDOW_
+#ifndef _GFX_WINDOW_OPENGL_
+#define _GFX_WINDOW_OPENGL_
 
 #include "win.h"
+#include "gfx/render_opengl.h"
 
-class Window
+class WindowOpenGL
 {
 public:
-    Window::Window();
+    WindowOpenGL::WindowOpenGL();
 
     bool create(HINSTANCE curr, int cmdShow);
     void destroy();
@@ -15,10 +16,10 @@ public:
 
 private:
     static LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-    void Window::adjustSize();
-    void Window::center();
-    ATOM Window::registerClass(HINSTANCE curr);
-    void Window::showMessage(LPCWSTR message);
+    void WindowOpenGL::adjustSize();
+    void WindowOpenGL::center();
+    ATOM WindowOpenGL::registerClass(HINSTANCE curr);
+    void WindowOpenGL::showMessage(LPCWSTR message);
 
     int width;
     int height;
@@ -31,6 +32,8 @@ private:
     HWND hwnd;
     DWORD style;
     LPTSTR windowClass;
+
+    RenderOpenGL renderer;
 };
 
 #endif
