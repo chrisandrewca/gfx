@@ -17,4 +17,5 @@ OpenGL playground with window initialization.
 - https://github.com/Lazarus247/project247
 - https://stackoverflow.com/questions
 - https://docs.microsoft.com/en-us/cpp/build/reference/compiler-options
+- http://antongerdelan.net/opengl/index.html
 - http://www.cplusplus.com/forum
