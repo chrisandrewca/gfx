@@ -6,41 +6,61 @@
 class BasicTriangle
 {
 public:
-    int vertCount = 9;
-    float vertices[9] = {
-        0.0f, 0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f};
-
     // OpenGL
     GLuint vao = 0;
     GLuint shader = 0;
 
     void loadOpenGL()
     {
+        float vertices[9] = {
+            0.0f, 0.5f, 0.0f,
+            0.5f, -0.5f, 0.0f,
+            -0.5f, -0.5f, 0.0f};
+        float colors[9] = {
+            1.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 1.0f};
+
         const char *vertexShader =
             "#version 400\n"
-            "in vec3 vp;"
-            "void main(){gl_Position = vec4(vp, 1.0);}";
+            "layout(location = 0) in vec3 vp;"
+            "layout(location = 1) in vec3 vc;"
+            "out vec3 color;"
+            "void main(){color=vc;gl_Position = vec4(vp, 1.0);}";
         const char *fragShader =
             "#version 400\n"
-            "out vec4 color;"
-            "void main(){color = vec4(0.129, 0.586, 0.949, 1.0);}";
+            "in vec3 color;"
+            "out vec4 fc;"
+            "void main(){fc = vec4(color, 1.0);}";
 
         // load the basic triangle sample
-        GLuint vbo = 0;
-        glGenBuffers(1, &vbo);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        GLuint vertsVbo = 0;
+        glGenBuffers(1, &vertsVbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vertsVbo);
         glBufferData(GL_ARRAY_BUFFER,
-                     vertCount * sizeof(float),
+                     9 * sizeof(float),
                      vertices,
+                     GL_STATIC_DRAW);
+
+        GLuint colorsVbo = 0;
+        glGenBuffers(1, &colorsVbo);
+        glBindBuffer(GL_ARRAY_BUFFER, colorsVbo);
+        glBufferData(GL_ARRAY_BUFFER,
+                     9 * sizeof(float),
+                     colors,
                      GL_STATIC_DRAW);
 
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
-        glEnableVertexAttribArray(0);       // enable buffer at position 0 for subsequent calls
-        glBindBuffer(GL_ARRAY_BUFFER, vbo); // bind VBO above to VAO @ pos.0
+
+        glBindBuffer(GL_ARRAY_BUFFER, vertsVbo);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+        glBindBuffer(GL_ARRAY_BUFFER, colorsVbo);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
 
         // TODO learn how to organize shaders ...
         GLuint vs = glCreateShader(GL_VERTEX_SHADER);
