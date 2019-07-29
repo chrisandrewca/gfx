@@ -6,7 +6,9 @@
 class BasicTriangle
 {
 public:
-    // OpenGL
+    /*
+     * OpenGL
+     */
     GLuint vao = 0;
     GLuint shader = 0;
 
@@ -33,7 +35,7 @@ public:
             "out vec4 fc;"
             "void main(){fc = vec4(color, 1.0);}";
 
-        // load the basic triangle sample
+        // opengl state machine ...
         GLuint vertsVbo = 0;
         glGenBuffers(1, &vertsVbo);
         glBindBuffer(GL_ARRAY_BUFFER, vertsVbo);

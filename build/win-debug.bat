@@ -12,6 +12,7 @@ cl ^
 /DDEBUG ^
 /DVALIDATE_SHADERS ^
 /Fo.\artifacts\obj\ ^
+    ..\src\deps\tinyobjloader\tiny_obj_loader.cc ^
     ..\src\platform\win\main.cpp ^
     ..\src\platform\win\gl_win.cpp ^
     ..\src\platform\win\window_opengl.cpp ^

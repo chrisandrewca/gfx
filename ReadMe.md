@@ -19,3 +19,4 @@ OpenGL playground with window initialization.
 - https://docs.microsoft.com/en-us/cpp/build/reference/compiler-options
 - http://antongerdelan.net/opengl/index.html
 - http://www.cplusplus.com/forum
+- https://github.com/syoyo/tinyobjloader
