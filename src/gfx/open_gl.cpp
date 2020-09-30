@@ -1,4 +1,4 @@
-#include "gl.h"
+#include "open_gl.h"
 #include "utils/log.h"
 
 #include <stdio.h>
@@ -73,17 +73,17 @@ extern PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer = nullptr;
  */
 void PrintShaderDetails(GLuint shaderId)
 {
-    PrintD("\nPrintShaderDetails\n----------------");
+    gfxLog::info("\nPrintShaderDetails\n----------------");
     auto params = -1;
 
     glGetProgramiv(shaderId, GL_LINK_STATUS, &params);
-    PrintD("GL_LINK_STATUS = %i", params);
+    gfxLog::info("GL_LINK_STATUS = %i", params);
 
     glGetProgramiv(shaderId, GL_ATTACHED_SHADERS, &params);
-    PrintD("GL_ATTACHED_SHADERS = %i", params);
+    gfxLog::info("GL_ATTACHED_SHADERS = %i", params);
 
     glGetProgramiv(shaderId, GL_ACTIVE_ATTRIBUTES, &params);
-    PrintD("GL_ACTIVE_ATTRIBUTES = %i", params);
+    gfxLog::info("GL_ACTIVE_ATTRIBUTES = %i", params);
 
     for (auto i = 0; i < params; i++)
     {
@@ -109,20 +109,20 @@ void PrintShaderDetails(GLuint shaderId)
                 char long_name[64];
                 sprintf(long_name, "%s[%i]", name, j);
                 auto location = glGetAttribLocation(shaderId, long_name);
-                PrintD("  %i) type:%s name:%s location:%i",
+                gfxLog::info("  %i) type:%s name:%s location:%i",
                        i, GLTypeToString(type), long_name, location);
             }
         }
         else
         {
             auto location = glGetAttribLocation(shaderId, name);
-            PrintD("  %i) type:%s name:%s location:%i",
+            gfxLog::info("  %i) type:%s name:%s location:%i",
                    i, GLTypeToString(type), name, location);
         }
     }
 
     glGetProgramiv(shaderId, GL_ACTIVE_UNIFORMS, &params);
-    PrintD("GL_ACTIVE_UNIFORMS = %i", params);
+    gfxLog::info("GL_ACTIVE_UNIFORMS = %i", params);
     for (auto i = 0; i < params; i++)
     {
         auto max_length = 64;
@@ -147,14 +147,14 @@ void PrintShaderDetails(GLuint shaderId)
                 char long_name[64];
                 sprintf(long_name, "%s[%i]", name, j);
                 auto location = glGetUniformLocation(shaderId, long_name);
-                PrintD("  %i) type:%s name:%s location:%i",
+                gfxLog::info("  %i) type:%s name:%s location:%i",
                        i, GLTypeToString(type), long_name, location);
             }
         }
         else
         {
             auto location = glGetUniformLocation(shaderId, name);
-            PrintD("  %i) type:%s name:%s location:%i",
+            gfxLog::info("  %i) type:%s name:%s location:%i",
                    i, GLTypeToString(type), name, location);
         }
     }
@@ -168,7 +168,7 @@ void PrintShaderInfoLog(GLuint shaderId)
     auto actual_length = 0;
     char program_log[2048];
     glGetProgramInfoLog(shaderId, max_length, &actual_length, program_log);
-    PrintD("program info log for GL index %u:\n%s", shaderId, program_log);
+    gfxLog::info("program info log for GL index %u:\n%s", shaderId, program_log);
 }
 
 const char *GLTypeToString(GLenum type)

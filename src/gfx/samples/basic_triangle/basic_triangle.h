@@ -1,7 +1,7 @@
 #ifndef _GFX_BASIC_TRIANGLE_
 #define _GFX_BASIC_TRIANGLE_
 
-#include "gfx/gl.h"
+#include "gfx/open_gl.h"
 
 class BasicTriangle
 {

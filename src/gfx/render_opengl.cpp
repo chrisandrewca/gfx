@@ -1,13 +1,12 @@
 #include "render_opengl.h"
-#include "gl.h"
+#include "open_gl.h"
 #include "utils/log.h"
 
 using namespace gfxOpenGL;
 
 void RenderOpenGL::printBasicInfo()
 {
-    PrintD("%s", glGetString(GL_RENDERER));
-    PrintD("%s", glGetString(GL_VERSION));
+    gfxLog::info("version: {0} renderer: {1}", glGetString(GL_VERSION), glGetString(GL_RENDERER));
 }
 
 // render a sample

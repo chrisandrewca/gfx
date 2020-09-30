@@ -19,16 +19,19 @@ int APIENTRY wWinMain(
     {
         while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
-            if (msg.message == WM_QUIT || msg.message == VK_ESCAPE || msg.message == VK_BACK)
+            if (msg.message == WM_QUIT)
             {
                 running = false;
             }
+
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+
         window.render();
         window.swapBuffers();
     }
+
     window.destroy();
 
     return msg.wParam;

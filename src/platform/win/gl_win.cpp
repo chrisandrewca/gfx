@@ -1,4 +1,4 @@
-#include "gfx/gl.h"
+#include "gfx/open_gl.h"
 
 namespace gfxOpenGL
 {

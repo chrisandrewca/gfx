@@ -63,7 +63,7 @@ extern PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer;
             glValidateProgram(shaderId);                                    \
             auto params = -1;                                               \
             glGetProgramiv(shaderId, GL_VALIDATE_STATUS, &params);          \
-            PrintD("program %i GL_VALIDATE_STATUS = %i", shaderId, params); \
+            gfxLog::info("program {0} GL_VALIDATE_STATUS = {1}", shaderId, params); \
             if (GL_TRUE != params)                                          \
             {                                                               \
                 PrintShaderInfoLog(shaderId);                               \
